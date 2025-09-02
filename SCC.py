@@ -14,14 +14,29 @@ Simple Abstraction of code:
 """
 
 import time
-# 1st. Take user input and handle the file
 
+def encrpyt(text):
+    print("encrypt")
+
+def decrpyt(text):
+    print("decrpyt")
+
+# 1st. Take user input and handle the file
 def handleFile(filename):
+    text = ""
+    with open(filename, 'r') as file:
+        text = file.read()
+
+    if "-scc" in text:
+        decrpyt(text)
+    else:
+        encrpyt(text)
+
 
 if __name__ == '__main__':
     print("="*24)
     filename = input("Please enter a filename: ")
     print("="*24)
     print("Processing...")
-    #time.sleep(5) just cause it look cooler and legit
+    #time.sleep(3) just cause it look cooler and legit
     handleFile(filename)
