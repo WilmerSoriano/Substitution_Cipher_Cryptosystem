@@ -49,6 +49,8 @@ def decrpyt(text, key_word):
             decrpyt_word += reverse_key[letter]
         else:
             decrpyt_word += letter
+    print("Decrpyted word: "+decrpyt_word)
+    return decrpyt_word
 
 # 1st. Take user input and handle the file
 def handleFile(filename, key):
