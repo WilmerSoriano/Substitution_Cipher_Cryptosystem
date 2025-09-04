@@ -14,29 +14,49 @@ Simple Abstraction of code:
 """
 
 import time
+import string
 
-def encrpyt(text):
-    print("encrypt")
+alphabet = list(string.ascii_lowercase)
 
-def decrpyt(text):
+def shift_letter(key):
+    shift_alpha = [""] * 26
+    for i in range(len(alphabet)):
+        shift_alpha[(i+key) % 26] = alphabet[i]
+
+    return dict(zip(alphabet, shift_alpha)) # Now alphabet are mapped to respective shifted letter.
+
+# Changes the phrase into sub-cipher and keeps space or numbers
+def encrpyt(text, key_word):
+    encrpyt_word = ""
+    for letter in text:
+        if letter in key_word:
+            encrpyt_word += key_word[letter]
+        else:
+            encrpyt_word += letter
+    encrpyt_word = "scc_"+encrpyt_word
+    return encrpyt_word
+
+def decrpyt(phrase, key):
     print("decrpyt")
 
 # 1st. Take user input and handle the file
-def handleFile(filename):
+def handleFile(filename, key):
     text = ""
     with open(filename, 'r') as file:
         text = file.read()
 
     if "-scc" in text:
-        decrpyt(text)
+        return decrpyt(text,key)
     else:
-        encrpyt(text)
+        hidden = encrpyt(text,key)
+        print("Encrypted: "+hidden)
 
 
 if __name__ == '__main__':
     print("="*24)
     filename = input("Please enter a filename: ")
+    key = input("Please enter the key: ")
+    shifted = shift_letter(int(key))
     print("="*24)
-    print("Processing...")
-    #time.sleep(3) just cause it look cooler and legit
-    handleFile(filename)
+    handleFile(filename,shifted)
+
