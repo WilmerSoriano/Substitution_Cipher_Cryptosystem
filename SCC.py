@@ -1,19 +1,17 @@
 """
 Simple Abstraction of code:
-    1st handle the txt file / ask user for file
-    2nd determine the encry/decry
+    1st Ask user for filename, txt file, return the result to file.
+    2nd Using the key, shift the letters
+    2nd Determine the encrypt and decrypt
         - if encrypt
-            - take the message
-            - make a key
-            - hide the message
+            - match the text with key mapping
+            - return and save to file
         - if decrypt
-            - take the message
-            - use the key
-            - reveal message
-    3rd save the message and print in txt file
+            - reverse the key mapping
+            - return and reveal message
+    3rd save the message and print
 """
 
-import time
 import string
 
 alphabet = list(string.ascii_lowercase)
@@ -25,7 +23,7 @@ def shift_letter(key):
 
     return dict(zip(alphabet, shift_alpha)) # Now alphabet are mapped to respective shifted letter.
 
-# Changes the phrase into sub-cipher and keeps space or numbers
+# Changes the phrase into a substitution cipher
 def encrpyt(text, key_word):
     encrpyt_word = ""
 
@@ -33,7 +31,7 @@ def encrpyt(text, key_word):
         if letter in key_word:
             encrpyt_word += key_word[letter]
         else:
-            encrpyt_word += letter
+            encrpyt_word += letter # Not a alphabet, must be space or a character
 
     encrpyt_word = "scc_"+encrpyt_word
     print("Encrypted: "+ encrpyt_word)
@@ -42,7 +40,7 @@ def encrpyt(text, key_word):
 
 def decrpyt(text, key_word):
     decrpyt_word = ""
-    reverse_key = {v: k for k, v in key_word.items()}
+    reverse_key = {v: k for k, v in key_word.items()} # Reverse the mapping (e.g if A|x then x|A)
 
     for letter in text:
         if letter in reverse_key:
@@ -52,12 +50,12 @@ def decrpyt(text, key_word):
     print("Decrpyted word: "+decrpyt_word)
     return decrpyt_word
 
-# 1st. Take user input and handle the file
+# Take user input and handle the file
 def handleFile(filename, key):
     text = ""
     with open(filename, 'r') as file:
         text = file.read()
-
+    # scc or substitution cipher cryptosystem is how am going to identify decryption is needed
     if "scc_" in text:
         text = text.replace("scc_", "")
         text = decrpyt(text,key)
