@@ -70,7 +70,7 @@ def handleFile(filename, key):
 if __name__ == '__main__':
     print("="*24)
     filename = input("Please enter a filename: ")
-    key = input("Please enter the key: ")
+    key = input("Please enter a number key: ")
     print("="*24)
 
     shifted = shift_letter(int(key))
