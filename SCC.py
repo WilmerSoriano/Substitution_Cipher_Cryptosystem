@@ -76,4 +76,3 @@ if __name__ == '__main__':
     shifted = shift_letter(int(key))
 
     handleFile(filename,shifted)
-
