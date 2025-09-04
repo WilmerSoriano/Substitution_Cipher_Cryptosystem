@@ -24,7 +24,7 @@ def shift_letter(key):
     return dict(zip(alphabet, shift_alpha)) # Now alphabet are mapped to respective shifted letter.
 
 # Changes the phrase into a substitution cipher
-def encrpyt(text, key_word):
+def encrypt(text, key_word):
     encrpyt_word = ""
 
     for letter in text:
@@ -38,7 +38,7 @@ def encrpyt(text, key_word):
 
     return encrpyt_word
 
-def decrpyt(text, key_word):
+def decrypt(text, key_word):
     decrpyt_word = ""
     reverse_key = {v: k for k, v in key_word.items()} # Reverse the mapping (e.g if A|x then x|A)
 
@@ -58,9 +58,9 @@ def handleFile(filename, key):
     # scc or substitution cipher cryptosystem is how am going to identify decryption is needed
     if "scc_" in text:
         text = text.replace("scc_", "")
-        text = decrpyt(text,key)
+        text = decrypt(text,key)
     else:
-        text = encrpyt(text,key)
+        text = encrypt(text,key)
     
     print("saved to file!")
     with open(filename, 'w') as file:
@@ -70,7 +70,7 @@ def handleFile(filename, key):
 if __name__ == '__main__':
     print("="*24)
     filename = input("Please enter a filename: ")
-    key = input("Please enter a number key: ")
+    key = input("Please enter a number key (between [0 - 25]): ")
     print("="*24)
 
     shifted = shift_letter(int(key))
