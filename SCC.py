@@ -28,16 +28,27 @@ def shift_letter(key):
 # Changes the phrase into sub-cipher and keeps space or numbers
 def encrpyt(text, key_word):
     encrpyt_word = ""
+
     for letter in text:
         if letter in key_word:
             encrpyt_word += key_word[letter]
         else:
             encrpyt_word += letter
+
     encrpyt_word = "scc_"+encrpyt_word
+    print("Encrypted: "+ encrpyt_word)
+
     return encrpyt_word
 
-def decrpyt(phrase, key):
-    print("decrpyt")
+def decrpyt(text, key_word):
+    decrpyt_word = ""
+    reverse_key = {v: k for k, v in key_word.items()}
+
+    for letter in text:
+        if letter in reverse_key:
+            decrpyt_word += reverse_key[letter]
+        else:
+            decrpyt_word += letter
 
 # 1st. Take user input and handle the file
 def handleFile(filename, key):
@@ -45,18 +56,24 @@ def handleFile(filename, key):
     with open(filename, 'r') as file:
         text = file.read()
 
-    if "-scc" in text:
-        return decrpyt(text,key)
+    if "scc_" in text:
+        text = text.replace("scc_", "")
+        text = decrpyt(text,key)
     else:
-        hidden = encrpyt(text,key)
-        print("Encrypted: "+hidden)
+        text = encrpyt(text,key)
+    
+    print("saved to file!")
+    with open(filename, 'w') as file:
+        file.write(text)
 
 
 if __name__ == '__main__':
     print("="*24)
     filename = input("Please enter a filename: ")
     key = input("Please enter the key: ")
-    shifted = shift_letter(int(key))
     print("="*24)
+
+    shifted = shift_letter(int(key))
+
     handleFile(filename,shifted)
 
